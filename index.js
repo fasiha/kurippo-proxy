@@ -22,7 +22,7 @@ javascript:(function() {
     selection : window.getSelection().toString(),
     isQuote : true
   };
-  var ws = new WebSocket('wss://0.0.0.0:8443/');
+  var ws = new WebSocket('wss://localhost:8443/');
   ws.onopen = function() { ws.send(JSON.stringify(o)); };
 })()
 
