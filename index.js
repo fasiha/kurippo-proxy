@@ -11,6 +11,7 @@ Much gratitude to http://www.chovy.com/web-development/self-signed-certs-with-se
 
 To create keys:
 $ openssl req -x509 -newkey rsa:2048 -keyout key.pem -out cert.pem -days 100 -nodes
+OR follow https://certsimple.com/blog/localhost-ssl-fix for macOS
 
 Bookmarklet code:
 javascript:(function() {
@@ -27,7 +28,7 @@ javascript:(function() {
 
 or minified:
 
-!function(){var e={source:"web submission",url:window.location.href,title:document.title,selection:window.getSelection().toString(),isQuote:!0},n=new WebSocket("wss://0.0.0.0:8443/");n.onopen=function(){n.send(JSON.stringify(e))}}();
+!function(){var e={source:"web submission",url:window.location.href,title:document.title,selection:window.getSelection().toString(),isQuote:!0},n=new WebSocket("wss://localhost:8443/");n.onopen=function(){n.send(JSON.stringify(e))}}();
 
  */
 
@@ -39,8 +40,8 @@ var express = require('express');
 var app = express();
 
 var fs = require('fs');
-var privateKey = fs.readFileSync('key.pem', 'utf8');
-var certificate = fs.readFileSync('cert.pem', 'utf8');
+var privateKey = fs.readFileSync(`${process.env.HOME}/.localhost-ssl/key.pem`, 'utf8');
+var certificate = fs.readFileSync(`${process.env.HOME}/.localhost-ssl/cert.pem`, 'utf8');
 
 var credentials = {key : privateKey, cert : certificate};
 
